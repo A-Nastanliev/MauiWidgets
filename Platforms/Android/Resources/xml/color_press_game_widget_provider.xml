@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="100dp"
+	android:maxWidth="110dp"
+    android:minHeight="100dp"
+    android:maxHeight="110dp"
+    android:updatePeriodMillis="0"
+    android:initialLayout="@layout/color_press_game_widget_layout"
+    android:resizeMode="horizontal|vertical"
+    android:widgetCategory="home_screen"
+	android:previewImage="@drawable/color_press_game_widget_image"/>
