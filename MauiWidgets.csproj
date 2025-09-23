@@ -41,6 +41,10 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -64,6 +68,7 @@
 	  <None Remove="Platforms\Android\Resources\drawable\color_press_game_widget_image.jpg" />
 	  <None Remove="Platforms\Android\Resources\drawable\light_bulb_buttons_widget_image.png" />
 	  <None Remove="Platforms\Android\Resources\drawable\light_bulb_switch_widget_image.png" />
+	  <None Remove="Platforms\Android\Resources\drawable\picked_image_widget_image.png" />
 	  <None Remove="Platforms\Android\Resources\drawable\username_widget_image.png" />
 	  <None Remove="Platforms\Android\Resources\layout\color_changing_button_widget_layout.xml" />
 	  <None Remove="Platforms\Android\Resources\xml\color_changing_button_widget_provider.xml" />

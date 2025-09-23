@@ -34,4 +34,7 @@ The following widgets were originally created by [Lukymistr](https://github.com/
   - Displays the current username set in the app.  
   - Updates automatically whenever the username changes.  
 
+- **Picked Image Widget**  
+  - Allows the user to pick an image within the app for the widget to display on the home screen.  
+  - Updates automatically whenever the chosen image changes.
 ---

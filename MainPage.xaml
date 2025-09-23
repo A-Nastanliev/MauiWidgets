@@ -7,11 +7,13 @@
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
-            <Image
-                Source="dotnet_bot.png"
-                HeightRequest="185"
-                Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a hovercraft number nine" />
+            <Image x:Name="UserImage"
+                   HeightRequest="185"
+                   Aspect="AspectFit"
+                   SemanticProperties.Description="User selected image" />
+
+            <Button Text="Pick Image"
+                    Clicked="OnPickImageClicked" />
 
             <Label
                 Text="Hello, World!"
