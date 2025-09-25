@@ -77,14 +77,26 @@ namespace MauiWidgets
             {
                 RemoteViews views = new RemoteViews(context.PackageName, Resource.Layout.picked_image_widget_layout);
 
-                // Update only the image
                 var fileName = ImagePath;
                 if (!string.IsNullOrEmpty(fileName))
                 {
                     var localPath = System.IO.Path.Combine(FileSystem.AppDataDirectory, fileName);
                     if (File.Exists(localPath))
-                    {
-                        var bitmap = DecodeAndScaleImage(localPath, 300, 300); // adjust to widget size
+                    {                    
+                        var options = appWidgetManager.GetAppWidgetOptions(widgetId);
+
+                        int targetWidth = 300;
+                        int targetHeight = 300;
+                        if (options != null)
+                        {
+                            int maxWidth = options.GetInt(AppWidgetManager.OptionAppwidgetMaxWidth);
+                            int maxHeight = options.GetInt(AppWidgetManager.OptionAppwidgetMaxHeight);
+
+                            if (maxWidth > 0) targetWidth = DpToPx(context, maxWidth);
+                            if (maxHeight > 0) targetHeight = DpToPx(context, maxHeight);
+                        }
+
+                        var bitmap = DecodeAndScaleImage(localPath, targetWidth, targetHeight);
                         if (bitmap != null)
                         {
                             views.SetImageViewBitmap(Resource.Id.user_image_view, bitmap);
@@ -115,9 +127,44 @@ namespace MauiWidgets
             options.InJustDecodeBounds = false;
             options.InSampleSize = scaleFactor;
 
-            return BitmapFactory.DecodeFile(path, options);
+            var roughBitmap = BitmapFactory.DecodeFile(path, options);
+
+            if (roughBitmap == null) return null;
+
+            float ratio = Math.Min(
+                (float)targetWidth / roughBitmap.Width,
+                (float)targetHeight / roughBitmap.Height
+            );
+
+            int finalWidth = (int)(roughBitmap.Width * ratio);
+            int finalHeight = (int)(roughBitmap.Height * ratio);
+
+            Bitmap scaledBitmap = Bitmap.CreateScaledBitmap(
+                roughBitmap,
+                finalWidth,
+                finalHeight,
+                true
+            );
+
+            if (scaledBitmap != roughBitmap)
+            {
+                roughBitmap.Recycle();
+            }
+
+            return scaledBitmap;
+        }
+
+        /// <summary>
+        /// Convert dp to px based on device density.
+        /// </summary>
+        public static int DpToPx(Context context, int dp)
+        {
+            float density = context.Resources.DisplayMetrics.Density;
+            return (int)(dp * density);
         }
     }
+
+
 }
 
 #endif

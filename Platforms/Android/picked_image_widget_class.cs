@@ -24,15 +24,24 @@ namespace MauiWidgets.Platforms.Android
                 if (!string.IsNullOrEmpty(fileName))
                 {
                     var localPath = System.IO.Path.Combine(FileSystem.AppDataDirectory, fileName);
-                   /* if (File.Exists(localPath))
-                    {
-                        var bitmap = BitmapFactory.DecodeFile(localPath);
-                        views.SetImageViewBitmap(Resource.Id.user_image_view, bitmap);
-                    }*/
                     if (File.Exists(localPath))
                     {
-                        // ✅ Use scaled image
-                        var bitmap = UserPreferences.DecodeAndScaleImage(localPath, 300, 300); // adjust to widget size
+                        int targetWidth = 300;  // fallback
+                        int targetHeight = 300; // fallback
+
+                        // Try to get widget size info
+                        var options = appWidgetManager.GetAppWidgetOptions(widgetId);
+                        if (options != null)
+                        {
+                            int maxWidth = options.GetInt(AppWidgetManager.OptionAppwidgetMaxWidth);
+                            int maxHeight = options.GetInt(AppWidgetManager.OptionAppwidgetMaxHeight);
+
+                            if (maxWidth > 0) targetWidth = UserPreferences.DpToPx(context, maxWidth);
+                            if (maxHeight > 0) targetHeight = UserPreferences.DpToPx(context, maxHeight);
+                        }
+
+                        // Scale image properly
+                        var bitmap = UserPreferences.DecodeAndScaleImage(localPath, targetWidth, targetHeight);
                         if (bitmap != null)
                         {
                             views.SetImageViewBitmap(Resource.Id.user_image_view, bitmap);

@@ -15,11 +15,6 @@
             <Button Text="Pick Image"
                     Clicked="OnPickImageClicked" />
 
-            <Label
-                Text="Hello, World!"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
-
             <Grid
                 ColumnDefinitions="*, auto">
                 <Entry
