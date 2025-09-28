@@ -9,7 +9,7 @@ using Android.Widget;
 
 namespace MauiWidgets.Platforms.Android
 {
-    [Activity(Exported = true)]
+    [Activity(Exported = true, TaskAffinity ="", ExcludeFromRecents = true)]
     public class image_config_activity : Activity
     {
         const int PickImage = 1001;
