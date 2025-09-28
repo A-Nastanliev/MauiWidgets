@@ -35,6 +35,12 @@ The following widgets were originally created by [Lukymistr](https://github.com/
   - Updates automatically whenever the username changes.  
 
 - **Picked Image Widget**  
-  - Allows the user to pick an image within the app for the widget to display on the home screen.  
-  - Updates automatically whenever the chosen image changes.
+  - Displays an image chosen **inside the app**.  
+  - All instances of this widget share the same image (global).  
+  - Useful if you want a single image to appear consistently across multiple widget placements.  
+
+- **Image Widget**  
+  - A standalone image widget where **each widget can have its own image**.  
+  - Tap on a widget to open a picker and assign a new image specifically for that widget.  
+  - Each widget stores its image separately, so you can have different images in different widget placements.
 ---

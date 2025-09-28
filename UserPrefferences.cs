@@ -44,9 +44,33 @@ namespace MauiWidgets
             set
             {
                 var context = Android.App.Application.Context;
+                string fileName = null;
+
+                if (!string.IsNullOrEmpty(value) && File.Exists(value))
+                {
+                    try
+                    {
+                        // Copy into AppDataDirectory
+                        fileName = System.IO.Path.GetFileName(value);
+                        var destPath = System.IO.Path.Combine(FileSystem.AppDataDirectory, fileName);
+
+                        File.Copy(value, destPath, overwrite: true);
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[UserPreferences] Failed to copy image: {ex}");
+                        fileName = null; // fall back to clearing
+                    }
+                }
+
+                // Save the file name
                 var prefs = context.GetSharedPreferences(PrefsName, FileCreationMode.Private);
                 var editor = prefs.Edit();
-                editor.PutString(ImageKey, value);
+                if (fileName == null)
+                    editor.Remove(ImageKey);
+                else
+                    editor.PutString(ImageKey, fileName);
+
                 editor.Apply();
 
                 RefreshImageWidgets(context);
@@ -107,9 +131,7 @@ namespace MauiWidgets
             }
         }
 
-        /// <summary>
-        /// Decode and scale image to avoid exceeding RemoteViews bitmap memory limit.
-        /// </summary>
+        // Decode and scale image to avoid exceeding RemoteViews bitmap memory limit.
         public static Bitmap DecodeAndScaleImage(string path, int targetWidth, int targetHeight)
         {
             // Decode bounds only

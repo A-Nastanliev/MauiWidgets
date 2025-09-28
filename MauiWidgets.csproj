@@ -69,6 +69,7 @@
 	  <None Remove="Platforms\Android\Resources\drawable\light_bulb_buttons_widget_image.png" />
 	  <None Remove="Platforms\Android\Resources\drawable\light_bulb_switch_widget_image.png" />
 	  <None Remove="Platforms\Android\Resources\drawable\picked_image_widget_image.png" />
+	  <None Remove="Platforms\Android\Resources\drawable\placeholder_image.png" />
 	  <None Remove="Platforms\Android\Resources\drawable\username_widget_image.png" />
 	  <None Remove="Platforms\Android\Resources\layout\color_changing_button_widget_layout.xml" />
 	  <None Remove="Platforms\Android\Resources\xml\color_changing_button_widget_provider.xml" />

@@ -50,18 +50,11 @@
 
                 if (result != null)
                 {
-                    // Copy into AppDataDirectory
-                    string localPath = Path.Combine(FileSystem.AppDataDirectory, result.FileName);
-
-                    using var stream = await result.OpenReadAsync();
-                    using var fileStream = File.Open(localPath, FileMode.Create, FileAccess.Write);
-                    await stream.CopyToAsync(fileStream);
-
-                    // Save just the filename in preferences
-                    UserPreferences.ImagePath = result.FileName;
+                    // Let UserPreferences handle copying and saving of the image
+                    UserPreferences.ImagePath = result.FullPath;
 
                     // Update UI immediately
-                    UserImage.Source = ImageSource.FromFile(localPath);
+                    UserImage.Source = ImageSource.FromFile(result.FullPath);
                 }
             }
             catch (Exception ex)
